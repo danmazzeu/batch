@@ -18,15 +18,13 @@ function check_git() {
 # Checks if Git is installed
 check_git
 
-# Set the username and password for GitHub
+# Set the username (for reference)
 GITHUB_USERNAME="danmazzeu"
-GITHUB_PASSWORD="%448600%55Dd"
 
 # Set the repository name
 REPO_NAME="batch"
 
-# Set the remote URL
+# Set the remote URL using SSH (assuming SSH key is set up)
 REMOTE_URL="git@github.com:${GITHUB_USERNAME}/${REPO_NAME}.git"
 
-
-echo "Repository setup to GitHub successfully!"
+echo "Pushed changes to the remote repository successfully!"

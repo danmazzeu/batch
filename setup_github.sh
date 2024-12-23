@@ -1,35 +1,19 @@
 #!/bin/bash
 
-# Function to check if Git is installed
-function check_git() {
-  if ! command -v git &> /dev/null; then
-    echo "Git is not installed. Would you like to install it now? (y/n)"
-    read -r install_git
-    if [[ $install_git =~ ^[Yy]$ ]]; then
-      sudo apt-get update && sudo apt-get install git -y
-      check_git
-    else
-      echo "Git installation is recommended for this script to function."
-      exit 1
-    fi
-  fi
-}
+# Check if a Git repository is already initialized
+if ! git init -q >/dev/null 2>&1; then
+  echo "Initializing a new Git repository..."
+  git init
+fi
 
-# Checks if Git is installed
-check_git
+# Prompt the user for the remote repository name
+read -p "Enter your username: " username
 
-read -p "Digite seu token: " -s token
+# Prompt the user for the remote repository name
+read -p "Enter the remote repository: " repository
 
-read -p "Digite seu usuário: "  user
+# Add the remote repository using double quotes for proper variable expansion
+git remote add "$repository" "https://github.com/$username/$repository"
 
-read -p "Digite seu repositorio: "  repo
-
-
-# Construct secure Git remote URL
-git_remote_url="https://${token}@github.com/${user}/${repo}"
-
-git push --set-upstream origin main
-git remote add origin "$git_remote_url"
-git push origin
-
-echo "Successfully pushed to remote repository."
+# Message
+echo "Repository '$repository' added successfully."

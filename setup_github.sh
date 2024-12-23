@@ -22,15 +22,19 @@ check_git
 # Sets the Git token
 read -p "Type your GitHub token: " gitToken
 
-# Prompts for GitHub email
-# Sets the Git global user email
+# Prompts for GitHub username
+# Sets the Git global user username
+read -p "Type your GitHub username: " gitUsername
+
+# Prompts for GitHub e-mail
+# Sets the Git global user e-mail
 read -p "Type your GitHub e-mail: " gitEmail
 git config --global user.email $gitEmail
 
 # Prompts for repository name
 # Constructs the full URL
 read -p "Type your GitHub repository: " gitRepository
-gitUrl="https://$gitToken@github.com/danmazzeu/$gitRepository"
+gitUrl="https://$gitToken@github.com/$gitUsername/$gitRepository"
 
 # Executes the git remote set-url command
 git remote set-url origin "$gitUrl"

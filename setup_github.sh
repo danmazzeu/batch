@@ -18,7 +18,9 @@ function check_git() {
 # Checks if Git is installed
 check_git
 
-gitToken="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"
+# Prompts for GitHub token
+# Sets the Git token
+read -p "Type your GitHub token: " gitToken
 
 # Prompts for GitHub email
 # Sets the Git global user email

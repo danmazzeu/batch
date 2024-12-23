@@ -18,26 +18,33 @@ function check_git() {
 # Checks if Git is installed
 check_git
 
-# Prompts for GitHub token
-# Sets the Git token
-read -p "Type your GitHub token: " gitToken
+# Clear Credential Cache (optional, but recommended)
+git credential-cache --erase
 
-# Prompts for GitHub username
+# Prompt for GitHub username
 # Sets the Git global user username
 read -p "Type your GitHub username: " gitUsername
+git config --global user.name "$gitUsername"
 
-# Prompts for GitHub e-mail
+# Prompt for GitHub e-mail
 # Sets the Git global user e-mail
 read -p "Type your GitHub e-mail: " gitEmail
-git config --global user.email $gitEmail
+git config --global user.email "$gitEmail"
 
-# Prompts for repository name
-# Constructs the full URL
+# Prompt for repository name
+# Constructs the full URL (without token)
 read -p "Type your GitHub repository: " gitRepository
-gitUrl="https://$gitToken@github.com/$gitUsername/$gitRepository"
+gitUrl="https://github.com/$gitUsername/$gitRepository"
 
-# Executes the git remote set-url command
-git remote set-url origin "$gitUrl"
+# Read GitHub personal access token securely (avoiding script storage)
+echo "Enter your GitHub personal access token (it won't be shown):"
+read -r -s gitToken
+
+# Setup Main Branch (assuming the main branch is named 'main')
+git push origin main -u
+
+# Set Git remote URL using the token (not stored in script)
+git remote set-url origin "https://$gitToken@$gitUrl"
 
 # Message
 echo "Remote URL updated successfully!"
